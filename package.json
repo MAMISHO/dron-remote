@@ -1,8 +1,8 @@
 {
-  "name": "sails-angular-7",
+  "name": "bot-control",
   "private": true,
-  "version": "0.0.0",
-  "description": "Sails application with angular 7",
+  "version": "1.0.0",
+  "description": "Sails application with angular 10",
   "keywords": [],
   "dependencies": {
     "@angular/animations": "~10.0.7",

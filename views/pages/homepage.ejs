@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <%if (sails.config.environment === 'production') { %>
+        <%- partial('../../assets/dist/index.html') %>
+    <% } else{ %>
+        <!-- this is not working because the assets is in public on developer mode -->
+        <!-- < %- partial('../../assets/app/index.html') %> -->
+
+
+        <h1>You are not in production, may be you want to go to <a href="http://localhost:4200"> App debug</a></h1>
+        <h2>If you run build, go to <a href="./dist/index.html">App prod</a></h2>
+    <% } %>
+
+</html>

@@ -1,29 +1,40 @@
-# dron-remote
- Proyecto que permite el control de un dron vía remota. El dron y cliente establecen una comunicación mediante un protocolo websocket en el que el controlClient envía instrucciones de movimientos y coordenadas para ser ejecutadas por el dron
+### Bootplate
+Proyecto de arranque de sails js v1.0.2 y angular v7.0
 
-```mermaid
-sequenceDiagram
-Dron->>Server: Connect?
-Server-->>Dron: OK
-loop checkCurrentStatusReady
-    Dron->>Server: send(Position, defaultProperties)
-end
-Note over Dron, Server: Register DronId!
-ClientContol->>Server: Dron available(dronnId)?
-Note right of Server: MatchDron and User
-Server->>ClientContol: send (DronId, status)
-loop dronConnected
-    alt DronIsReady
-        ClientContol->>+Server: send(dronnId, order)
-        Server->>Server: matchDron(DronId)
-        Server->>-Dron: send(Order)
-        Dron-->>+Server: sendOrderDone(Order, dronId)
-        Server->>Server: matchClientControl(DronId)
-        Server->>-ClientContol: sendOrderDone(order)
-    else
-    Dron->>Server: sendWaitStatus(Position)
-    end
-end
-```
-[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5Ecm9uLT4-U2VydmVyOiBDb25uZWN0P1xuU2VydmVyLS0-PkRyb246IE9LXG5sb29wIGNoZWNrQ3VycmVudFN0YXR1c1JlYWR5XG4gICAgRHJvbi0-PlNlcnZlcjogc2VuZChQb3NpdGlvbiwgZGVmYXVsdFByb3BlcnRpZXMpXG5lbmRcbk5vdGUgb3ZlciBEcm9uLCBTZXJ2ZXI6IFJlZ2lzdGVyIERyb25JZCFcbkNsaWVudENvbnRvbC0-PlNlcnZlcjogRHJvbiBhdmFpbGFibGUoZHJvbm5JZCk_XG5Ob3RlIHJpZ2h0IG9mIFNlcnZlcjogTWF0Y2hEcm9uIGFuZCBVc2VyXG5TZXJ2ZXItPj5DbGllbnRDb250b2w6IHNlbmQgKERyb25JZCwgc3RhdHVzKVxubG9vcCBkcm9uQ29ubmVjdGVkXG4gICAgYWx0IERyb25Jc1JlYWR5XG4gICAgICAgIENsaWVudENvbnRvbC0-PitTZXJ2ZXI6IHNlbmQoZHJvbm5JZCwgb3JkZXIpXG4gICAgICAgIFNlcnZlci0-PlNlcnZlcjogbWF0Y2hEcm9uKERyb25JZClcbiAgICAgICAgU2VydmVyLT4-LURyb246IHNlbmQoT3JkZXIpXG4gICAgICAgIERyb24tLT4-K1NlcnZlcjogc2VuZE9yZGVyRG9uZShPcmRlciwgZHJvbklkKVxuICAgICAgICBTZXJ2ZXItPj5TZXJ2ZXI6IG1hdGNoQ2xpZW50Q29udHJvbChEcm9uSWQpXG4gICAgICAgIFNlcnZlci0-Pi1DbGllbnRDb250b2w6IHNlbmRPcmRlckRvbmUob3JkZXIpXG4gICAgZWxzZVxuICAgIERyb24tPj5TZXJ2ZXI6IHNlbmRXYWl0U3RhdHVzKFBvc2l0aW9uKVxuICAgIGVuZFxuZW5kIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRhcmsifSwidXBkYXRlRWRpdG9yIjpmYWxzZSwiYXV0b1N5bmMiOnRydWUsInVwZGF0ZURpYWdyYW0iOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/edit#eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5Ecm9uLT4-U2VydmVyOiBDb25uZWN0P1xuU2VydmVyLS0-PkRyb246IE9LXG5sb29wIGNoZWNrQ3VycmVudFN0YXR1c1JlYWR5XG4gICAgRHJvbi0-PlNlcnZlcjogc2VuZChQb3NpdGlvbiwgZGVmYXVsdFByb3BlcnRpZXMpXG5lbmRcbk5vdGUgb3ZlciBEcm9uLCBTZXJ2ZXI6IFJlZ2lzdGVyIERyb25JZCFcbkNsaWVudENvbnRvbC0-PlNlcnZlcjogRHJvbiBhdmFpbGFibGUoZHJvbm5JZCk_XG5Ob3RlIHJpZ2h0IG9mIFNlcnZlcjogTWF0Y2hEcm9uIGFuZCBVc2VyXG5TZXJ2ZXItPj5DbGllbnRDb250b2w6IHNlbmQgKERyb25JZCwgc3RhdHVzKVxubG9vcCBkcm9uQ29ubmVjdGVkXG4gICAgYWx0IERyb25Jc1JlYWR5XG4gICAgICAgIENsaWVudENvbnRvbC0-PitTZXJ2ZXI6IHNlbmQoZHJvbm5JZCwgb3JkZXIpXG4gICAgICAgIFNlcnZlci0-PlNlcnZlcjogbWF0Y2hEcm9uKERyb25JZClcbiAgICAgICAgU2VydmVyLT4-LURyb246IHNlbmQoT3JkZXIpXG4gICAgICAgIERyb24tLT4-K1NlcnZlcjogc2VuZE9yZGVyRG9uZShPcmRlciwgZHJvbklkKVxuICAgICAgICBTZXJ2ZXItPj5TZXJ2ZXI6IG1hdGNoQ2xpZW50Q29udHJvbChEcm9uSWQpXG4gICAgICAgIFNlcnZlci0-Pi1DbGllbnRDb250b2w6IHNlbmRPcmRlckRvbmUob3JkZXIpXG4gICAgZWxzZVxuICAgIERyb24tPj5TZXJ2ZXI6IHNlbmRXYWl0U3RhdHVzKFBvc2l0aW9uKVxuICAgIGVuZFxuZW5kIiwibWVybWFpZCI6IntcbiAgXCJ0aGVtZVwiOiBcImRhcmtcIlxufSIsInVwZGF0ZUVkaXRvciI6ZmFsc2UsImF1dG9TeW5jIjp0cnVlLCJ1cGRhdGVEaWFncmFtIjpmYWxzZX0)
+---
 
+# Información
+
+## Descripción
+
+El proyecto tiene las configuraciones necesarias para el entorno de desarrollo y produción. Para depurar el Front-End se hace por el puerto 4200 que es el que vien por defecto en Angular. Para verificar el build de producción del Front-End se puede hacer por el puerto 1337 que es el que utiliza Sails. El back-End y el Front-End se comunican por un proxy, de tal forma que no es necesario apuntar las peticiones de Angular al puerto 1337 de Sails.
+
+## Dependencias
+
+El proyecto tiene todas las dependencias de Sails y Angular  (Las dependencias de Serie)
+
+# Desarrollo
+El desarrollo del Back-End se hace desde la raíz del proyecto. El proyecto de Angular se encuentra localizado en el directorio assest/app.
+
+
+# Instalación
+Es necesario tener las dependencias de los frameworks principales como instalaciones globales.
+* `npm install sails -g `: Sails para el Back-End (Si da problemas, mirar la versión que se indica en package.json)
+* `npm install -g @angular/cli`: Angular para el Front-end (Si da problemas, mirar la versión que se indica en package.json)
+
+# Arrancar
+* `npm run start`: Arranca los dos proyectos en el entorno de desarrollo
+* `npm run build`: Empaqueta la aplicación web(Angular) para producción, la misma está configurada para que se despliegue en el directorio assets/dist/.
+* `npm run dev`: Inicia el Back (Sails) en desarrollo
+* `npm run prod`: Inicial al Back-End para producción (Es necesario comprobar la configuración de despliegue)
+
+## Copyleft y licencia
+
+El trabajo es una recopilación de documentación libre que se puede encontrar en internet, por lo tanto, quien use el proyecto será libre de:
+
+* Usarlo sin ninguna limitación.
+* Libertad de estudio (ver cómo está hecho el trabajo).
+* (re)distribuir cuantas copias desee.
+* Modificarla de la manera que crea conveniente.
+
+Copyleft (c) 2018 by Mamisho

@@ -137,5 +137,10 @@ Topbar Responsive
         display: none;
       }
     }
+    .nav-toggler,
+    .topbartoggler {
+      color: $theme-dark;
+      padding: 0 15px;
+    }
   }
 }

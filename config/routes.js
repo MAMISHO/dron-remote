@@ -24,15 +24,15 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
- '/': {
-  view: 'pages/homepage',
-  skipAssets: true
-},
+  '/': {
+    view: 'pages/homepage',
+    skipAssets: true
+  },
 
-'/#*': {
-  view: 'pages/homepage',
-  skipAssets: true
-},
+  '/#*': {
+    view: 'pages/homepage',
+    skipAssets: true
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -50,7 +50,10 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-
+  'post /register':{
+    controller: 'UserController',
+    action: 'register'
+  },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

@@ -19,6 +19,7 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "async": "2.0.1",
+    "bcryptjs": "^2.4.3",
     "core-js": "^2.5.4",
     "event-stream": "^4.0.1",
     "ngx-perfect-scrollbar": "^6.1.0",

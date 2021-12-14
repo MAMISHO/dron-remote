@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardComponent } from './modules/pages/dashboard/dashboard.component';
+import { NopagefoundComponent } from './modules/pages/nopagefound/nopagefound.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LayoutComponent,
     NavigationComponent,
     SidebarComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    DashboardComponent,
+    NopagefoundComponent
   ],
   imports: [
     AppRoutingModule,

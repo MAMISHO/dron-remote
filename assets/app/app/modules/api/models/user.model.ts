@@ -3,7 +3,7 @@ export interface IUser {
   surname?: string,
   email?: string,
   password?: string,
-  isAdmin?: boolean,
+  role?: string,
   passwordConfirmation?: string,
   passwordVerified(): boolean,
   isOkpasswordFormat(): boolean
@@ -15,7 +15,7 @@ export class User implements IUser {
     public surname?: string,
     public email?: string,
     public password?: string,
-    public isAdmin?: boolean,
+    public role?: string,
     public passwordConfirmation?: string
     ) {
   }
@@ -27,4 +27,11 @@ export class User implements IUser {
   isOkpasswordFormat(): boolean {
     return this.password && this.password.length >7;
   }
+}
+
+export class ResponseLogin {
+  constructor(
+    public user?: User,
+    public token?: string
+    ) {}
 }

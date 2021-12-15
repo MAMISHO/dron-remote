@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService as AuthGuard } from './modules/auth/auth-guard.service';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { LayoutComponent } from './modules/layout/layout.component';
@@ -33,7 +34,11 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard]
+      },
       // { path: 'progress', component: ProgressComponent },
       // { path: 'grafica1', component: Grafica1Component },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

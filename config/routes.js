@@ -54,6 +54,14 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'register'
   },
+  'post /login':{
+    controller: 'UserController',
+    action: 'login'
+  },
+  'get /check': {
+    controller: 'UserController',
+    action: 'check'
+  }
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

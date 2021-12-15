@@ -15,7 +15,7 @@ module.exports = {
     name: { type: 'string'},
     type:{
       type: 'string',
-      enum: ['cliente', 'empresa']
+      isIn: ['DRON', 'OTHER']
     },
     email: {
       type: 'string',

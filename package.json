@@ -14,6 +14,7 @@
     "@angular/platform-browser": "^12.0.2",
     "@angular/platform-browser-dynamic": "^12.0.2",
     "@angular/router": "^12.0.2",
+    "@auth0/angular-jwt": "^5.0.2",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.3",
@@ -22,6 +23,8 @@
     "bcryptjs": "^2.4.3",
     "core-js": "^2.5.4",
     "event-stream": "^4.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "ngx-perfect-scrollbar": "^6.1.0",
     "rxjs": "~6.6.2",
     "rxjs-compat": "^6.6.2",
@@ -72,8 +75,8 @@
     "build:aot": "ng build --aot --deploy-url=dist/",
     "clean": "rimraf assets/dist",
     "prod": "sails lift --prod",
-    "dev": "sails lift",
-    "debug": "node --inspect app.js"
+    "debug": "sails lift",
+    "dev": "node --inspect app.js"
   },
   "main": "app.js",
   "repository": {

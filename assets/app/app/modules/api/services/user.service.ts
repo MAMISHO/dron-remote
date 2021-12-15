@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { User } from '../models/user.model';
+import { ResponseLogin, User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,23 @@ import { User } from '../models/user.model';
 export class UserService {
 
   private registerUserURI = '/register';
+  private loginUserURI = '/login';
 
   constructor(private http: HttpClient) { }
 
   public register(user: User): Observable<User> {
+    return this.http.post<User>(this.registerUserURI, user).pipe(
+      catchError(this.error)
+    )
+  }
+
+  public login(user: User): Observable<ResponseLogin> {
+    return this.http.post<ResponseLogin>(this.loginUserURI, user).pipe(
+      catchError(this.error)
+    );
+  }
+
+  public logout(user: User): Observable<User> {
     return this.http.post<User>(this.registerUserURI, user).pipe(
       catchError(this.error)
     )

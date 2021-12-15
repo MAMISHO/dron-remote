@@ -18,6 +18,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './modules/pages/dashboard/dashboard.component';
 import { NopagefoundComponent } from './modules/pages/nopagefound/nopagefound.component';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,10 @@ import { NopagefoundComponent } from './modules/pages/nopagefound/nopagefound.co
     NgbModule,
     // RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' })
   ],
-  providers: [],
+  providers: [
+      { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+      JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

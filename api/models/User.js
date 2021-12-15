@@ -48,7 +48,12 @@ module.exports = {
       defaultsTo: null
     },
 
-    isAdmin: { type: 'boolean' },
+    // isAdmin: { type: 'boolean' },
+
+    role: {
+      type: 'string',
+      isIn: ['ADMIN', 'USER']
+    }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

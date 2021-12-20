@@ -49,11 +49,12 @@ module.exports.models = {
   * > auto-migrations on your production database.                           *
   * >                                                                        *
   * > For more info, see:                                                    *
-  * > https://sailsjs.com/docs/concepts/orm/model-settings#?migrate          *
+  * > https://sailsjs.com/docs/concepts/orm/model-settings#?migrate
+  * safe alter drop        *
   *                                                                          *
   ***************************************************************************/
 
-  migrate: 'drop',
+  migrate: 'alter',
 
 
   /***************************************************************************

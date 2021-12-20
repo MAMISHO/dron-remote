@@ -59,6 +59,7 @@ module.exports = {
 			}
     }, { fetch: true });
 */
+    params.status = true;
     var newUser = await User.create(params)
     /*.intercept('E_UNIQUE', (err)=> {
       return 'emailAlreadyInUse';

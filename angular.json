@@ -21,7 +21,8 @@
             "assets": ["assets/app/assets", "assets/app/favicon.ico"],
             "styles": ["assets/app/styles.css", "assets/app/assets/scss/style.scss"],
             "scripts": [],
-            "optimization": false
+            "optimization": false,
+            "sourceMap": true
           },
           "configurations": {
             "production": {

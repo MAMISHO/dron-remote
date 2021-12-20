@@ -53,7 +53,9 @@ module.exports = {
     role: {
       type: 'string',
       isIn: ['ADMIN', 'USER']
-    }
+    },
+
+    status: { type: 'boolean' },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -63,6 +65,11 @@ module.exports = {
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+
+    devices: {
+      collection: 'device',
+      via: 'owner'
+    },
 
   },
 

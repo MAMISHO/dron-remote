@@ -61,6 +61,14 @@ module.exports.routes = {
   'get /check': {
     controller: 'UserController',
     action: 'check'
+  },
+  'post /devices': {
+    controller: 'DeviceController',
+    action: 'create'
+  },
+  'get /devices': {
+    controller: 'DeviceController',
+    action: 'findAll'
   }
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

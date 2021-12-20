@@ -18,11 +18,24 @@ module.exports = function(req, res, next) {
 		//authorization header is not present
 		return res.json(401, {err: 'No Authorization header was found'});
 	}
-	jwToken.verify(token, function(err, decoded) {
+	jwToken.verify(token, async function(err, decoded) {
 		if(err) {
+      req.session.destroy();
 			return res.json(401, {err: 'Invalid token'});
 		}
-		req.user = decoded;
+    const decodedUser = decoded.data;
+    if(!decodedUser) {
+      return res.json(401, {err: 'Invalid user'});
+    }
+    if(!req.session.user) {
+      const user = await User.findOne({id: decodedUser.id});
+      if(user && user.status) {
+        req.session.user = user
+      } else {
+        req.session.destroy();
+        return res.json(401, {err: 'Invalid user'});
+      }
+    }
 		next();
 	});
 };

@@ -12,6 +12,7 @@
  * them on a project-wide or per-model basis, see:
  * https://sailsjs.com/docs/concepts/models-and-orm/model-settings
  */
+ const uuid = require('uuid');
 
 module.exports.models = {
 
@@ -73,6 +74,7 @@ module.exports.models = {
     createdAt: { type: 'number', autoCreatedAt: true, },
     updatedAt: { type: 'number', autoUpdatedAt: true, },
     id: { type: 'number', autoIncrement: true, },
+    uuid: { type: 'string'},
     //--------------------------------------------------------------------------
     //  /\   Using MongoDB?
     //  ||   Replace `id` above with this instead:
@@ -84,6 +86,13 @@ module.exports.models = {
     // Plus, don't forget to configure MongoDB as your default datastore:
     // https://sailsjs.com/docs/tutorials/using-mongo-db
     //--------------------------------------------------------------------------
+  },
+  beforeCreate: function (modelObj, next) {
+    modelObj.uuid = uuid.v4();
+    next();
+  },
+  customToJSON: function(values, next){
+    return _.omit(this, ['password', 'passwordConfirmation', 'createdAt', 'updatedAt', 'id']);
   },
 
 

@@ -2,7 +2,7 @@ import { RouteInfo } from "./sidebar.metadata";
 
 export const ROUTES: RouteInfo[] = [
   {
-    path: "/drines",
+    path: "/devices",
     title: "Dispositivos",
     icon: "mdi mdi-dots-horizontal",
     class: "nav-small-cap",
@@ -10,7 +10,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: "/drones",
+    path: "/devices",
     title: "Drones",
     icon: "mdi mdi-gauge",
     class: "",

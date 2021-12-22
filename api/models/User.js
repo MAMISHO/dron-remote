@@ -5,6 +5,9 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 const bcrypt = require('bcryptjs');
+const { lastValueFrom } = require('rxjs');
+const uuid = require('uuid');
+
 module.exports = {
   // datastore: 'mongodb',
 
@@ -97,7 +100,7 @@ module.exports = {
     delete obj.passwordConfirmation;
     delete obj._csfr;
     return obj;*/
-    return _.omit(this, ['password', 'passwordConfirmation', 'createdAt', 'updatedAt']);
+    return _.omit(this, ['password', 'passwordConfirmation', 'createdAt', 'updatedAt', 'id']);
   },
 
   beforeCreate: function(values, next){
@@ -108,6 +111,7 @@ module.exports = {
     values.email = values.email.trim();
     values.password = values.password.trim();
     values.passwordConfirmation = values.passwordConfirmation?.trim();
+    values.role = "USER";
 
     if(!values.passwordConfirmation){
       return next({field: "password", error: "please, repeat the password"});
@@ -134,6 +138,7 @@ module.exports = {
     values.password = encryptedPassword;
     next();
     */
+    values.uuid = uuid.v4();
     sails.helpers.passwords.hashPassword(values.password).exec((err, hashedPassword)=>{
       if (err) { return next(err); }
       values.password = hashedPassword;

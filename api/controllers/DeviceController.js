@@ -38,7 +38,7 @@ module.exports = {
    */
   findAll: async function (req, res) {
     const params = req.allParams();
-    const devices = await Device.find({owner: req.session.user.id});
+    const devices = await Device.find({owner: req.session.user.id}).populate('owner');
     res.send(devices);
   }
 

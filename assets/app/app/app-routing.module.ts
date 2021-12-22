@@ -6,6 +6,7 @@ import { RegisterComponent } from './modules/auth/register/register.component';
 import { LayoutComponent } from './modules/layout/layout.component';
 import { DashboardComponent } from './modules/pages/dashboard/dashboard.component';
 import { NopagefoundComponent } from './modules/pages/nopagefound/nopagefound.component';
+import { UserDevicesComponent } from './modules/pages/user-devices/user-devices.component';
 
 // const routes: Routes = [];
 // export const routes: Routes = [
@@ -39,7 +40,11 @@ const routes: Routes = [
         component: DashboardComponent,
         canActivate: [AuthGuard]
       },
-      // { path: 'progress', component: ProgressComponent },
+      {
+        path: 'devices',
+        component: UserDevicesComponent,
+        canActivate: [AuthGuard]
+      },
       // { path: 'grafica1', component: Grafica1Component },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]

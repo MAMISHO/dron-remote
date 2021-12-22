@@ -28,7 +28,7 @@ module.exports = function(req, res, next) {
       return res.json(401, {err: 'Invalid user'});
     }
     if(!req.session.user) {
-      const user = await User.findOne({id: decodedUser.id});
+      const user = await User.findOne({uuid: decodedUser.uuid});
       if(user && user.status) {
         req.session.user = user
       } else {

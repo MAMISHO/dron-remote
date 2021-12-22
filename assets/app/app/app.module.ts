@@ -14,11 +14,15 @@ import { RouterModule } from '@angular/router';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './modules/pages/dashboard/dashboard.component';
 import { NopagefoundComponent } from './modules/pages/nopagefound/nopagefound.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { DevicesComponent } from './modules/components/device/devices/devices.component';
+import { DevicesListComponent } from './modules/components/device/devices-list/devices-list.component';
+import { AuthInterceptor } from './modules/auth/auth.interceptor';
+import { UserDevicesComponent } from './modules/pages/user-devices/user-devices.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,10 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     SidebarComponent,
     BreadcrumbComponent,
     DashboardComponent,
-    NopagefoundComponent
+    NopagefoundComponent,
+    DevicesComponent,
+    DevicesListComponent,
+    UserDevicesComponent
   ],
   imports: [
     AppRoutingModule,
@@ -45,7 +52,8 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
   ],
   providers: [
       { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-      JwtHelperService
+      JwtHelperService,
+      { provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi : true }
   ],
   bootstrap: [AppComponent]
 })

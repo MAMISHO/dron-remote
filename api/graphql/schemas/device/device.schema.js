@@ -1,13 +1,6 @@
 const { applyMiddleware } = require('graphql-middleware');
-const { permissions } = require('../../policies/shieldSchema');
-const {
-  GraphQLSchema,
-  GraphQLString,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLInputObjectType,
-  GraphQLInt,
-} = require('graphql');
+const { permissions } = require('../../policies/schema.shield.rules');
+const { GraphQLSchema, GraphQLObjectType, GraphQLNonNull } = require('graphql');
 const { DeviceType, DeviceInputType } = require('./device.types');
 
 const DeviceQueries = {
@@ -66,7 +59,10 @@ const DeviceSchema = new GraphQLSchema({
   }),
 });
 
+module.exports.DeviceSchema = DeviceSchema;
+
+/*
 module.exports.schemaWithPermissions = applyMiddleware(
   DeviceSchema,
   permissions
-);
+);*/

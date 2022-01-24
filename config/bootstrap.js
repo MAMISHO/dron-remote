@@ -9,9 +9,17 @@
  * https://sailsjs.com/config/bootstrap
  */
 const { graphqlHTTP } = require('express-graphql');
+/*
 const {
   schemaWithPermissions,
 } = require('../api/graphql/schemas/device/DeviceSchema');
+*/
+/*
+const {
+  schemaWithPermissions,
+} = require('../api/graphql/schemas/user/user.schema');
+*/
+const { schemaWithPermissions } = require('../api/graphql/schemas/schema');
 module.exports.bootstrap = async function (done) {
   // By convention, this is a good place to set up fake data during development.
   //

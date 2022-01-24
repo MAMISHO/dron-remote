@@ -1,5 +1,7 @@
 const { shield, rule, and, inputRule, deny } = require('graphql-shield');
 const { _authenticate, _authorize } = require('./auth');
+// const { UserPermissions } = require('../schemas/user/user.permissions');
+// const { DevicePermissions } = require('../schemas/device/device.permissions');
 
 const shieldRules = {
   isAuthenticated: rule()(async (parent, args, ctx, info) => {
@@ -43,23 +45,7 @@ const shieldRules = {
   ),
 };
 
-/*
-const permissions = shield({
-  Query: {
-    '*': deny,
-    // getBooks: and(shieldRules.isAuthenticated, shieldRules.isAdmin),
-    // getBook: shieldRules.isAuthenticated,
-    hello: and(shieldRules.isAuthenticated, shieldRules.isAdmin),
-    bye: shieldRules.isAuthenticated,
-  },
-  Mutation: {
-    // addBook: shieldRules.isNotAlreadyRegistered,
-    addEmployee: shieldRules.isNotAlreadyRegistered,
-  },
-});
-*/
-
-const permissions = shield({
+/*const permissions = shield({
   DeviceQueries: {
     '*': deny,
     getDevices: and(shieldRules.isAuthenticated, shieldRules.isAdmin),
@@ -69,6 +55,14 @@ const permissions = shield({
     // addBook: shieldRules.isNotAlreadyRegistered,
     addDevice: shieldRules.isNotAlreadyRegistered,
   },
-});
+});*/
 
-module.exports.permissions = permissions;
+/*const permissions = shield({
+  UserQueries: {
+    '*': deny,
+    getUser: shieldRules.isAuthenticated,
+  },
+});*/
+
+//module.exports.permissions = permissions;
+module.exports.ShieldRules = shieldRules;

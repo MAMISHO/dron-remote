@@ -1,41 +1,36 @@
-const { shield, rule, and, inputRule, deny } = require('graphql-shield');
+const { shield, deny } = require('graphql-shield');
 const { stitchSchemas } = require('@graphql-tools/stitch');
 const { applyMiddleware } = require('graphql-middleware');
-const { ShieldRules } = require('../policies/schema.shield.rules');
 const { UserSchema } = require('./user/user.schema');
 const { DeviceSchema } = require('./device/device.schema');
-const { SchemaPermissions } = require('../policies/schema.shield.rules');
 const { UserPermissions } = require('../schemas/user/user.permissions');
 const { DevicePermissions } = require('../schemas/device/device.permissions');
 
-// setup subschema configurations
+// Configuramos los subschemas
 const userSchema = { schema: UserSchema };
 const deviceSchema = { schema: DeviceSchema };
 
+// Unimos los subschemas en un schema global
 const schema = stitchSchemas({
   subschemas: [userSchema, deviceSchema],
 });
 
-/*const schemaPermissions = shield({
-  ...UserPermissions,
-  ...DevicePermissions,
-});*/
+/**
+ * Importamos todas las reglas de consulta y modificación de cada schema
+ */
 const schemaPermissions = shield({
   Query: {
     '*': deny,
-    // getDevices: and(ShieldRules.isAuthenticated, ShieldRules.isAdmin),
-    // getDevice: ShieldRules.isAuthenticated,
-    // getUser: ShieldRules.isAuthenticated,
     ...UserPermissions.queries,
     ...DevicePermissions.queries,
   },
   Mutation: {
-    // addDevice: ShieldRules.isNotAlreadyRegistered,
     ...UserPermissions.mutations,
     ...DevicePermissions.mutations,
   },
 });
 
+// Aplicamos las reglas al schema
 module.exports.schemaWithPermissions = applyMiddleware(
   schema,
   schemaPermissions

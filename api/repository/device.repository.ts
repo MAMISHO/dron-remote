@@ -10,46 +10,40 @@ export class IDeviceRepository {
 
   private constructor() {}
 
+  public static get Instance() {
+    // Do you need arguments? Make it a regular static method instead.
+    return this._instance || (this._instance = new this());
+  }
+
   public async findOne(filter: DeviceRequest): Promise<Device> {
     if (!filter || (!filter.id && !filter.uuid)) {
       return Promise.reject(new Error('No se ha indicado un identificador'));
     }
-    const device = await sails.models.device.find({
+    const device: Device = await sails.models.device.find({
       id: filter.id,
       uuid: filter.uuid,
     });
     if (device) {
-      const result = new Device(device);
-      return Promise.resolve(result);
-    } else {
       return Promise.resolve(device);
     }
+    return Promise.resolve(device);
   }
 
-  public static get Instance() {
-    // Do you need arguments? Make it a regular static method instead.
-    return this._instance || (this._instance = new this());
+  public async findAll(filter: DeviceRequest): Promise<Device[]> {
+    if (!filter || (filter.id && filter.uuid)) {
+      return Promise.reject(new Error('operación no permitida, no se pueden filtrar por ID'));
+    }
+    const finalFilter: any =  {};
+    if (filter.userId) {
+      finalFilter.owner = filter.userId;
+    }
+    const divices: Device[] = await sails.models.device.find(finalFilter);
+    if (divices) {
+      return Promise.resolve(divices);
+    }
+    return Promise.resolve([]);
   }
 }
 
 export const DeviceRepository = IDeviceRepository.Instance;
 
-/*
-export class DeviceRepository {
-  public async findOne(filter: DeviceRequest): Promise<Device> {
-    const device = await sails.models.Device.find({
-      id: filter.id,
-      uuid: filter.uuid,
-    });
-    if (device) {
-      const result = new Device(device);
-      return result;
-    } else {
-      return new Device(device);
-    }
-    return new Promise<Device>((resolve, reject) => {
-      resolve(new Device());
-    });
-  }
-}
-*/

@@ -1,0 +1,148 @@
+{
+	"variables": [],
+	"info": {
+		"name": "DronRemote",
+		"_postman_id": "d96ca360-ea71-d0ae-1517-bcf0a08258da",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"description": "",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"url": "http://localhost:1337/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"Edwin Mauricio\",\n\"surname\": \"Quishpe\",\n\"email\": \"mamisho@hotmai.com\",\n\"password\": \"HolaMundo\",\n\"passwordConfirmation\": \"HolaMundo\"\n}"
+						},
+						"description": "Registro de usuarios"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:1337/login",
+					"request": {
+						"url": "http://localhost:1337/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"mamisho@hotmai.com\",\n\t\"password\": \"HolaMundo\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Device",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Device",
+					"request": {
+						"url": "http://localhost:1337/devices",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InV1aWQiOiIzNzA0MTUzYy03NzNlLTRhYzEtOThkNy05NDUzYzg3NGFhM2UiLCJuYW1lIjoiRWR3aW4gTWF1cmljaW8iLCJzdXJuYW1lIjoiUXVpc2hwZSIsImVtYWlsIjoibWFtaXNob0Bob3RtYWkuY29tIiwicmVzZXRQYXNzd29yZFRva2VuIjpudWxsLCJyZXNldFBhc3N3b3JkRXhwaXJlcyI6bnVsbCwicm9sZSI6IlVTRVIiLCJzdGF0dXMiOnRydWV9LCJpYXQiOjE2NDM1NjgyNDAsImV4cCI6MTY0MzY1NDY0MH0.LSXEY7B6ux6SLmYdMErdNxG3V_Sz7wr2IsfNZgxkl1w",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Dron1\",\n\t\"type\": \"DRON\",\n\t\"email\": \"mamisho@hotmail.com\",\n\t\"password\": \"HolaMundo\"\n}"
+						},
+						"description": "Alta de dispositicos"
+					},
+					"response": []
+				},
+				{
+					"name": "FindOne Device",
+					"request": {
+						"url": {
+							"raw": "http://localhost:1337/custom-device?uuid=5870a072-2900-4704-819c-b108492b3e22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1337",
+							"path": [
+								"custom-device"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "5870a072-2900-4704-819c-b108492b3e22",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "id",
+									"value": "2",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InV1aWQiOiIzNzA0MTUzYy03NzNlLTRhYzEtOThkNy05NDUzYzg3NGFhM2UiLCJuYW1lIjoiRWR3aW4gTWF1cmljaW8iLCJzdXJuYW1lIjoiUXVpc2hwZSIsImVtYWlsIjoibWFtaXNob0Bob3RtYWkuY29tIiwicmVzZXRQYXNzd29yZFRva2VuIjpudWxsLCJyZXNldFBhc3N3b3JkRXhwaXJlcyI6bnVsbCwicm9sZSI6IlVTRVIiLCJzdGF0dXMiOnRydWV9LCJpYXQiOjE2NDM1NjgyNDAsImV4cCI6MTY0MzY1NDY0MH0.LSXEY7B6ux6SLmYdMErdNxG3V_Sz7wr2IsfNZgxkl1w",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Obtener un dispositivo por UUID"
+					},
+					"response": []
+				},
+				{
+					"name": "FindAllByUser",
+					"request": {
+						"url": "http://localhost:1337/custom-devices",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InV1aWQiOiIzNzA0MTUzYy03NzNlLTRhYzEtOThkNy05NDUzYzg3NGFhM2UiLCJuYW1lIjoiRWR3aW4gTWF1cmljaW8iLCJzdXJuYW1lIjoiUXVpc2hwZSIsImVtYWlsIjoibWFtaXNob0Bob3RtYWkuY29tIiwicmVzZXRQYXNzd29yZFRva2VuIjpudWxsLCJyZXNldFBhc3N3b3JkRXhwaXJlcyI6bnVsbCwicm9sZSI6IlVTRVIiLCJzdGF0dXMiOnRydWV9LCJpYXQiOjE2NDM1NjgyNDAsImV4cCI6MTY0MzY1NDY0MH0.LSXEY7B6ux6SLmYdMErdNxG3V_Sz7wr2IsfNZgxkl1w",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "Obtener un dispositivo por UUID"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

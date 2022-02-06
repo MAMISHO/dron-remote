@@ -1,12 +1,12 @@
 declare const sails: any;
-import { Device, DeviceRequest } from '../interfaces';
+import { User, UserRequest } from '../interfaces';
 
 /*export function hello(req:any, res:any, next: Function):any {
   res.status(200).send('Hello from Typescript!');
 }*/
 
-export class IDeviceRepository {
-  private static _instance: IDeviceRepository;
+export class IUserRepository {
+  private static _instance: IUserRepository;
 
   private constructor() {}
 
@@ -15,28 +15,26 @@ export class IDeviceRepository {
     return this._instance || (this._instance = new this());
   }
 
-  public async findOne(filter: DeviceRequest): Promise<Device> {
+  public async findOne(filter: UserRequest): Promise<User> {
     if (!filter || (!filter.id && !filter.uuid)) {
       return Promise.reject(new Error('No se ha indicado un identificador'));
     }
-    const device: Device = await sails.models.device.find({
+    const user: User = await sails.models.user.find({
       id: filter.id,
       uuid: filter.uuid,
+      email: filete.email
     });
-    return Promise.resolve(device);
+    return Promise.resolve(user);
   }
 
-  public async findAll(filter: DeviceRequest): Promise<Device[]> {
-    if (!filter || (filter.id && filter.uuid)) {
+  public async findAll(filter: UserRequest): Promise<User[]> {
+    if (!filter || filter.id && filter.uuid || filter.email) {
       return Promise.reject(new Error('operación no permitida, no se pueden filtrar por ID'));
     }
     const finalFilter: any =  {};
-    if (filter.userId) {
-      finalFilter.owner = filter.userId;
-    }
-    const devices: Device[] = await sails.models.device.find(finalFilter);
-    if (devices) {
-      return Promise.resolve(devices);
+    const users: User[] = await sails.models.device.find(finalFilter);
+    if (users) {
+      return Promise.resolve(users);
     }
     return Promise.resolve([]);
   }

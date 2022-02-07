@@ -44,7 +44,7 @@ module.exports.bootstrap = async function (done) {
     graphqlHTTP((req, res) => ({
       schema: schemaWithPermissions,
       context: { req },
-      graphiql: false,
+      graphiql: true,
     }))
   );
   return done();

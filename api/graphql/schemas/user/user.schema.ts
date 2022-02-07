@@ -1,9 +1,11 @@
-const { GraphQLSchema, GraphQLObjectType } = require('graphql');
+const { GraphQLSchema, GraphQLObjectType, GraphQLInt } = require('graphql');
 // const { permissions } = require('../../policies/shieldSchema');
 const { permissions } = require('../../policies/schema.shield.rules');
 const { UserType } = require('./user.types');
 const { applyMiddleware } = require('graphql-middleware');
-
+import { GraphQLString } from 'graphql';
+import { UserHelper } from '../../helpers/user.helper';
+/*
 const UserQueries = {
   getUser: {
     type: UserType,
@@ -29,6 +31,27 @@ const UserQueries = {
           },
         ],
       };
+    },
+  },
+};*/
+
+const UserQueries = {
+  getUser: {
+    type: UserType,
+    args: {
+      id: { type: GraphQLInt },
+      uuid: { type: GraphQLString },
+    },
+    resolve: (root, params, options) => {
+      if (!params) {
+        return null;
+      }
+      if (params.id) {
+        return UserHelper._getUserById(params.id);
+      }
+      if (params.uuid) {
+        return UserHelper._getUserByUUID(params.uuid);
+      }
     },
   },
 };

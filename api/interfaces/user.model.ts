@@ -4,12 +4,14 @@
  * @description :: Modelo que representa un Usuario
  */
 
- export enum UserRoleType {
+import { Device } from './device.model';
+
+export enum UserRoleType {
   ADMIN = 'ADMIN',
-  USER = 'USER'
+  USER = 'USER',
 }
 
- export interface IUser {
+export interface IUser {
   name: string;
   surname: string;
   email: string;
@@ -30,9 +32,7 @@ export class User {
     public role?: UserRoleType,
     public status?: boolean,
     public devices?: Device[]
-    ) {
-
-  }
+  ) {}
 }
 
 export interface UserRequest {
@@ -42,4 +42,3 @@ export interface UserRequest {
   email?: string;
   status?: boolean;
 }
-

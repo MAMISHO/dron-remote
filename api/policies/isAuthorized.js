@@ -1,7 +1,7 @@
-module.exports = function(req, res, next) {
-	var token;
-	//Check if authorization header is present
-	if(req.headers && req.headers.authorization) {
+module.exports = async function (req, res, next) {
+  var token;
+  //Check if authorization header is present
+  /*if(req.headers && req.headers.authorization) {
 		//authorization header is present
 		var parts = req.headers.authorization.split(' ');
 		if(parts.length == 2) {
@@ -17,25 +17,30 @@ module.exports = function(req, res, next) {
 	} else {
 		//authorization header is not present
 		return res.json(401, {err: 'No Authorization header was found'});
-	}
-	jwToken.verify(token, async function(err, decoded) {
-		if(err) {
+	}*/
+  try {
+    token = await sails.helpers.recoverToken(req);
+  } catch (ex) {
+    return res.json(401, { err: ex });
+  }
+  jwToken.verify(token, async function (err, decoded) {
+    if (err) {
       req.session.destroy();
-			return res.json(401, {err: 'Invalid token'});
-		}
-    const decodedUser = decoded.data;
-    if(!decodedUser) {
-      return res.json(401, {err: 'Invalid user'});
+      return res.json(401, { err: 'Invalid token' });
     }
-    if(!req.session.user) {
-      const user = await User.findOne({uuid: decodedUser.uuid});
-      if(user && user.status) {
-        req.session.user = user
+    const decodedUser = decoded.data;
+    if (!decodedUser) {
+      return res.json(401, { err: 'Invalid user' });
+    }
+    if (!req.session.user) {
+      const user = await User.findOne({ uuid: decodedUser.uuid });
+      if (user && user.status) {
+        req.session.user = user;
       } else {
         req.session.destroy();
-        return res.json(401, {err: 'Invalid user'});
+        return res.json(401, { err: 'Invalid user' });
       }
     }
-		next();
-	});
+    next();
+  });
 };

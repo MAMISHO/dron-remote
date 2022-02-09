@@ -13,6 +13,44 @@ module.exports = {
   _authenticate: async (context) => {
     console.log('pasa por el authenticate');
     let req = context.req;
+    let token;
+    try {
+      token = await sails.helpers.recoverToken(req);
+    } catch (err) {
+      return {
+        errors: [
+          {
+            code: 'I_AUTHTOKEN_MISSING',
+            message: message,
+          },
+        ],
+      };
+    }
+
+    let result = await sails.helpers.verifyToken(token, req);
+    if (!result) {
+      return {
+        errors: [
+          {
+            code: 'E_DECODE',
+            message: message,
+          },
+        ],
+      };
+    }
+    /*try {
+      result = await sails.helpers.verifyToken(token, req);
+    } catch (err) {
+      sails.log.error('auth._authenticate: Error encountered: ', err);
+      return {
+        errors: [
+          {
+            code: 'E_DECODE',
+            message: message,
+          },
+        ],
+      };
+    }*/
 
     /* Uncomment this sample code and adapt to implement your own JWT authentication
     let message = 'Access denied. You need to be loggedin to access this resource.';
@@ -90,13 +128,13 @@ module.exports = {
 
     // When you implement your own authentication mechanism,
     // remove the hard-coded result variable below.
-    let result = {
+    /*let result = {
       id: 1,
       fullName: 'Test',
       emailAddress: 'test@test.test',
       isRoleAdmin: true,
       roleId: 1,
-    };
+    };*/
 
     // Set the user object in graphql object for reference in subsequent processing
     context.user = result;

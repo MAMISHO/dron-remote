@@ -18,12 +18,10 @@
     "isolatedModules": false,
     "jsx": "preserve",
     "rootDir": "./",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "DOM", "ESNext"],
     "baseUrl": "./"
   },
   "exclude": ["node_modules"],
-  "include": ["./**/*.ts", "./**/*.tsx"]
+  "include": ["./**/*.ts", "./**/*.tsx", "api/helpers/recover-token.ts"]
 }

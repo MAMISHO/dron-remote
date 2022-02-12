@@ -14,9 +14,14 @@ module.exports = {
     console.log('pasa por el authenticate');
     let req = context.req;
     let token;
-    try {
-      token = await sails.helpers.recoverToken(req);
-    } catch (err) {
+    // try {
+    token = await sails.helpers.recoverToken(req).intercept((err) => {
+      // console.log(err);
+      return {
+        errors: [{ code: err.code, message: err.message }],
+      };
+    });
+    /*} catch (err) {
       return {
         errors: [
           {
@@ -25,9 +30,15 @@ module.exports = {
           },
         ],
       };
-    }
+    }*/
 
-    let result = await sails.helpers.verifyToken(token, req);
+    let result = await sails.helpers
+      .verifyToken(token, req)
+      .intercept((err) => {
+        return {
+          errors: [{ code: err.code, message: err.message }],
+        };
+      });
     if (!result) {
       return {
         errors: [

@@ -43,11 +43,12 @@ module.exports = {
           token = credentials;
         }
       } else {
-        throw 'badBearerTokenFormat';
+        return exits.badBearerTokenFormat();
       }
     } else {
       //authorization header is not present
-      throw 'noAutHeader';
+      // throw 'noAutHeader';
+      return exits.noAutHeader();
     }
     // return Promise.resolve(token);
     return exits.success(token);

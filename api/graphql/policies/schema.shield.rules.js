@@ -9,9 +9,13 @@ const shieldRules = {
     console.log('authenticate');
     let userAuth = false;
     if (ctx.user === undefined) {
-      var result = await _authenticate(ctx);
-      if (result !== undefined && result.errors === undefined) {
-        userAuth = true;
+      try {
+        var result = await _authenticate(ctx);
+        if (result !== undefined && result.errors === undefined) {
+          userAuth = true;
+        }
+      } catch (err) {
+        console.error(err);
       }
     } else {
       userAuth = true;

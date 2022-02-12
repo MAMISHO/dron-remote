@@ -43,14 +43,12 @@ module.exports = {
       decoded = jwToken.verify(token);
     } catch (err) {
       req.session.destroy();
-      return Promise.reject('invalidToken');
-      // throw 'invalidToken';
+      return exits.invalidToken();
     }
     const decodedUser = decoded.data;
     if (!decodedUser) {
       // return res.json(401, { err: 'Invalid user' });
-      return Promise.reject('invalidUser');
-      // throw 'invalidUser';
+      return exits.invalidUser();
     }
     if (!req.session.user) {
       // const user = await User.findOne({ uuid: decodedUser.uuid });
@@ -60,7 +58,7 @@ module.exports = {
       } else {
         req.session.destroy();
         // return res.json(401, { err: 'Invalid user' });
-        return Promise.reject('invalidUser');
+        return exits.invalidUser();
       }
     }
     return Promise.resolve(req.session.user);

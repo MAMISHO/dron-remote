@@ -12,7 +12,6 @@ module.exports = {
   // datastore: 'mongodb',
 
   attributes: {
-
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
@@ -30,32 +29,32 @@ module.exports = {
     email: {
       type: 'string',
       required: true,
-  		isEmail: true,
-  		unique: true
+      isEmail: true,
+      unique: true,
     },
 
     password: {
       type: 'string',
       required: true,
-      minLength:8
+      minLength: 8,
     },
 
-    resetPasswordToken:{
+    resetPasswordToken: {
       type: 'string',
-      allowNull: true
+      allowNull: true,
     },
 
-    resetPasswordExpires:{
+    resetPasswordExpires: {
       type: 'ref',
       columnType: 'datetime',
-      defaultsTo: null
+      defaultsTo: null,
     },
 
     // isAdmin: { type: 'boolean' },
 
     role: {
       type: 'string',
-      isIn: ['ADMIN', 'USER']
+      isIn: ['ADMIN', 'USER'],
     },
 
     status: { type: 'boolean' },
@@ -64,27 +63,25 @@ module.exports = {
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
 
-
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
     devices: {
       collection: 'device',
-      via: 'owner'
+      via: 'owner',
     },
-
   },
 
-  changePassword: function(newPassword, cb){
-    console.log("* Metodo cambiar contraseña *");
+  changePassword: function (newPassword, cb) {
+    console.log('* Metodo cambiar contraseña *');
     console.log(this.password);
     console.log(newPassword);
     this.password = newPassword;
-    this.save(function(err, u) {
+    this.save(function (err, u) {
       // if(err)  return res.serverError(err);
-      console.log("Cambiado con exito");
-      if(err) return console.log(err);
+      console.log('Cambiado con exito');
+      if (err) return console.log(err);
 
       console.log(u);
     });
@@ -94,36 +91,42 @@ module.exports = {
     return bcrypt.compareSync(clave, this.clave);
   },
 
-  customToJSON: function(values, next){
+  customToJSON: function (values, next) {
     /*var obj = this.toObject();
     delete obj.password;
     delete obj.passwordConfirmation;
     delete obj._csfr;
     return obj;*/
-    return _.omit(this, ['password', 'passwordConfirmation', 'createdAt', 'updatedAt', 'id']);
+    return _.omit(this, [
+      'password',
+      'passwordConfirmation',
+      'createdAt',
+      'updatedAt',
+      'id',
+    ]);
   },
 
-  beforeCreate: function(values, next){
+  beforeCreate: function (values, next) {
     // validamos campos
-    console.log("Validar usuario antes de crear");
+    console.log('Validar usuario antes de crear');
     values.name = values.name.trim();
     values.surname = values.surname.trim();
     values.email = values.email.trim();
     values.password = values.password.trim();
     values.passwordConfirmation = values.passwordConfirmation?.trim();
-    values.role = "USER";
+    values.role = 'USER';
 
-    if(!values.passwordConfirmation){
-      return next({field: "password", error: "please, repeat the password"});
+    if (!values.passwordConfirmation) {
+      return next({ field: 'password', error: 'please, repeat the password' });
     }
 
-    if(values.password !== values.passwordConfirmation){
-      return next({field: "password", error: "Password not equals"});
+    if (values.password !== values.passwordConfirmation) {
+      return next({ field: 'password', error: 'Password not equals' });
     }
 
     // require('bcrypt').hash(values.clave, 10, function passwordEncrypted(err, encryptedPassword){
-      console.log("ciframos la contraseña");
-      /*bcrypt.hash(values.password.toString(), null, null, function passwordEncrypted(err, encryptedPassword){
+    console.log('ciframos la contraseña');
+    /*bcrypt.hash(values.password.toString(), null, null, function passwordEncrypted(err, encryptedPassword){
         if(err) return next(err);
 
         values.password = encryptedPassword;
@@ -139,43 +142,49 @@ module.exports = {
     next();
     */
     values.uuid = uuid.v4();
-    sails.helpers.passwords.hashPassword(values.password).exec((err, hashedPassword)=>{
-      if (err) { return next(err); }
-      values.password = hashedPassword;
-      return next();
-    });
+    sails.helpers.passwords
+      .hashPassword(values.password)
+      .exec((err, hashedPassword) => {
+        if (err) {
+          return next(err);
+        }
+        values.password = hashedPassword;
+        return next();
+      });
   },
 
   beforeUpdate: function (attrs, cb) {
-    console.log("Entra a before");
+    console.log('Entra a before');
     for (var campo in attrs) {
-        var cadena = attrs[campo];
+      var cadena = attrs[campo];
 
-        if(typeof(cadena) === "string"){
-          attrs[campo] = cadena.trim();
-        }
-        // console.log(cadena);
+      if (typeof cadena === 'string') {
+        attrs[campo] = cadena.trim();
+      }
+      // console.log(cadena);
     }
     console.log(attrs);
-    console.log("pasa a cambiar la contraseña");
-    if(attrs.clave){
-        // require('bcrypt').hash(attrs.clave, 10, function passwordEncrypted(err, crypted) {
-          bcrypt.hash(attrs.clave.toString(), null, null, function passwordEncrypted(err, crypted) {
+    console.log('pasa a cambiar la contraseña');
+    if (attrs.clave) {
+      // require('bcrypt').hash(attrs.clave, 10, function passwordEncrypted(err, crypted) {
+      bcrypt.hash(
+        attrs.clave.toString(),
+        null,
+        null,
+        function passwordEncrypted(err, crypted) {
           // if(err) return cb(err);
-          if(err){
-            console.log("Error del bcrypt : " + err);
-            return  cb(err);
+          if (err) {
+            console.log('Error del bcrypt : ' + err);
+            return cb(err);
           }
-          console.log("SUCCESS");
+          console.log('SUCCESS');
           attrs.clave = crypted;
           return cb();
-        });
-    }
-    else {
-      console.log("No hay contraseña y devuelve el callack");
+        }
+      );
+    } else {
+      console.log('No hay contraseña y devuelve el callack');
       return cb();
     }
-  }
-
+  },
 };
-

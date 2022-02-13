@@ -19,4 +19,7 @@ module.exports = {
   verify: function (token, callback) {
     jwt.verify(token, sails.config.secret, callback);
   },
+  verifySync: function (token) {
+    return jwt.verify(token, sails.config.secret);
+  },
 };

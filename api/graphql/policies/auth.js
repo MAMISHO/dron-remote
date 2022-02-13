@@ -14,23 +14,11 @@ module.exports = {
     console.log('pasa por el authenticate');
     let req = context.req;
     let token;
-    // try {
     token = await sails.helpers.recoverToken(req).intercept((err) => {
-      // console.log(err);
       return {
         errors: [{ code: err.code, message: err.message }],
       };
     });
-    /*} catch (err) {
-      return {
-        errors: [
-          {
-            code: 'I_AUTHTOKEN_MISSING',
-            message: message,
-          },
-        ],
-      };
-    }*/
 
     let result = await sails.helpers
       .verifyToken(token, req)
@@ -49,103 +37,6 @@ module.exports = {
         ],
       };
     }
-    /*try {
-      result = await sails.helpers.verifyToken(token, req);
-    } catch (err) {
-      sails.log.error('auth._authenticate: Error encountered: ', err);
-      return {
-        errors: [
-          {
-            code: 'E_DECODE',
-            message: message,
-          },
-        ],
-      };
-    }*/
-
-    /* Uncomment this sample code and adapt to implement your own JWT authentication
-    let message = 'Access denied. You need to be loggedin to access this resource.';
-
-    if (
-      !req ||
-      !req.headers ||
-      (!req.headers.authorization && !req.headers.Authorization)
-    ) {
-      return {
-        errors: [
-          {
-            code: 'I_AUTHTOKEN_MISSING',
-            message: message
-          }
-        ]
-      };
-    }
-
-    let token = req.headers.authorization || req.headers.Authorization;
-    // Check presence of Auth Token and decode
-    if (!token) {
-      // Otherwise, this request did not come from a logged-in user.
-      return {
-        errors: [
-          {
-            code: 'I_AUTHTOKEN_MISSING',
-            message: message
-          }
-        ]
-      };
-    }
-
-    if (!token.startsWith('Bearer ')) {
-      // Otherwise, this request did not come from a logged-in user.
-      return {
-        errors: [
-          {
-            code: 'E_AUTHTYPE_INVALID',
-            message: message
-          }
-        ]
-      };
-    }
-
-    token = token.substring(7);
-    let result = {};
-    try {
-      result = await TokenService.decode({token: token});
-    } catch (err) {
-      sails.log.error('auth._authenticate: Error encountered: ', err);
-      return {
-        errors: [
-          {
-            code: 'E_DECODE',
-            message: message
-          }
-        ]
-      };
-    }
-
-    const now = Date.now() / 1000;
-    if (result.exp <= now) {
-      sails.log.info(`auth._authenticate: Access denied for: [${result.userName}] as the Auth Token has expired.`);
-      return {
-        errors: [
-          {
-            code: 'I_TOKEN_EXPIRED',
-            message: message
-          }
-        ]
-      };
-    }
-    */
-
-    // When you implement your own authentication mechanism,
-    // remove the hard-coded result variable below.
-    /*let result = {
-      id: 1,
-      fullName: 'Test',
-      emailAddress: 'test@test.test',
-      isRoleAdmin: true,
-      roleId: 1,
-    };*/
 
     // Set the user object in graphql object for reference in subsequent processing
     context.user = result;
@@ -176,4 +67,5 @@ module.exports = {
     }
     return isAllowed;
   }, // end _authorize()
+  // "processId": "${command:PickProcess}",
 };

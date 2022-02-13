@@ -40,7 +40,7 @@ module.exports = {
     const req = inputs.req;
     let decoded;
     try {
-      decoded = jwToken.verify(token);
+      decoded = await jwToken.verifySync(token);
     } catch (err) {
       req.session.destroy();
       return exits.invalidToken();
@@ -61,6 +61,6 @@ module.exports = {
         return exits.invalidUser();
       }
     }
-    return Promise.resolve(req.session.user);
+    return exits.success(req.session.user);
   },
 };

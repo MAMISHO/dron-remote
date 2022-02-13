@@ -17,8 +17,8 @@ export class UserRepositoryImpl {
     return this.findOne(filter);
   }
 
-  getByUUID(uuid: string): User {
-    throw new Error('Method not implemented.');
+  getByUUID(uuid: string): Promise<User> {
+    return this.findOne({ uuid });
   }
 
   add(user: User): void {

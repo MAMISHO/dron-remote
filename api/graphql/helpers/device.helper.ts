@@ -1,20 +1,26 @@
 import { Device } from 'api/interfaces';
-import { UserRepository } from '../../repository/user/user.repository';
+import { DeviceRepository } from '../../repository/device/device.repository';
 
 export const DeviceHelper = {
-  _addDevice: function (device) {},
+  _getDevicesByUser: async function (userId: number): Promise<Device[]> {
+    if (!userId) {
+      return [];
+    }
+    return DeviceRepository.getDevicesByUser(userId);
+  },
+
   _getDeviceById: async function (id: number): Promise<Device> {
     if (!id) {
       return null;
     }
-    return UserRepository.get(id);
+    return DeviceRepository.get(id);
   },
 
-  _getUserByUUID: async function (uuid: string) {
+  _getDeviceByUUID: async function (uuid: string) {
     if (!uuid || uuid.length < 32) {
       return null;
     }
-    const user = await UserRepository.getByUUID(uuid);
-    return Promise.resolve(user);
+    const device = await DeviceRepository.getByUUID(uuid);
+    return Promise.resolve(device);
   },
 };

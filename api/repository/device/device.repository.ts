@@ -17,6 +17,11 @@ export class DeviceRepositoryImpl {
     return this.findOne(filter);
   }
 
+  public getDevicesByUser(userId: number): Promise<Device[]> {
+    const filter: DeviceRequest = { userId };
+    return this.findAll(filter);
+  }
+
   getByUUID(uuid: string): Promise<Device> {
     return this.findOne({ uuid });
   }

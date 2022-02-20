@@ -41,4 +41,8 @@ module.exports = {
     const result = await DeviceRepository.findAll(deviceRequest);
     res.send(result);
   },
+
+  findBy: async (req: any, res: any) => {
+    return res.send({ messaje: 'prueba' });
+  },
 };

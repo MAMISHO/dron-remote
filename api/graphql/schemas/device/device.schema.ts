@@ -6,6 +6,7 @@ import {
   GraphQLSchema,
   GraphQLString,
 } from 'graphql';
+import { DeviceHelper } from '../../helpers/device.helper';
 import { DeviceInputType, DeviceType } from './device.types';
 
 // Pagination https://github.com/graph-gophers/graphql-go/pull/169
@@ -30,7 +31,7 @@ export const DeviceQueries = {
     type: new GraphQLList(DeviceType),
     name: 'devices',
     resolve: (root, params, options, info) => {
-      return [
+      /*return [
         {
           id: 0,
           name: 'world',
@@ -43,7 +44,16 @@ export const DeviceQueries = {
           type: 'DRON',
           email: 'world-1',
         },
-      ];
+      ];*/
+      if (root) {
+        params.id = root.id;
+        params.uuid = root.uuid;
+      }
+
+      if (params.id) {
+        return DeviceHelper._getDevicesByUser(params.id);
+      }
+      return [];
     },
   },
 };

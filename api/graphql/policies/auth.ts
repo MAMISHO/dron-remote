@@ -1,16 +1,13 @@
-declare const sails: any;
 /**
  * auth.js
  *
  * A simple policy that
  *  a) establishes identity of a user based on a jwt token
  *  b) allow access to resources based on role-based ACL
- *
  */
-
+declare const sails: any;
 import { PolicyPermission } from './permission';
 
-// module.exports = {
 export const GraphAuth = {
   _authenticate: async (context) => {
     console.log('pasa por el authenticate');

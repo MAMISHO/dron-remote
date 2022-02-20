@@ -6,8 +6,6 @@ export const UserHelper = {
     if (!id) {
       return null;
     }
-    // const user = await UserRepository.get(id);
-    // return Promise.resolve(user);
     return UserRepository.get(id);
   },
 

@@ -1,1 +1,1 @@
-export * from './device.repository';
+export * from './device/device.repository';

@@ -6,38 +6,7 @@ import {
 } from 'graphql';
 import { User } from '../../../interfaces/user.model';
 import { UserHelper } from '../../helpers/user.helper';
-// const { permissions } = require('../../policies/shieldSchema');
-// import { permissions } from '../../policies/schema.shield.rules';
 import { UserType } from './user.types';
-/*
-const UserQueries = {
-  getUser: {
-    type: UserType,
-    resolve: () => {
-      return {
-        id: 1,
-        name: 'edwin',
-        surname: 'Quishpe',
-        role: 'ADMIN',
-        email: 'test@example.com',
-        devices: [
-          {
-            id: 1,
-            name: 'Bender',
-            type: 'DRON',
-            email: 'test@example.com',
-          },
-          {
-            id: 2,
-            name: 'R2D2',
-            type: 'DRON',
-            email: 'test2@example.com',
-          },
-        ],
-      };
-    },
-  },
-};*/
 
 export const UserQueries = {
   getUser: {
@@ -73,8 +42,3 @@ export const UserSchema = new GraphQLSchema({
     fields: UserQueries,
   }),
 });
-
-// module.exports.UserSchema = UserSchema;
-// module.exports.UserQueries = UserQueries;
-
-// module.exports.schemaWithPermissions = applyMiddleware(UserSchema, permissions);

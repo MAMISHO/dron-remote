@@ -9,16 +9,6 @@
  * https://sailsjs.com/config/bootstrap
  */
 const { graphqlHTTP } = require('express-graphql');
-/*
-const {
-  schemaWithPermissions,
-} = require('../api/graphql/schemas/device/DeviceSchema');
-*/
-/*
-const {
-  schemaWithPermissions,
-} = require('../api/graphql/schemas/user/user.schema');
-*/
 import { schemaWithPermissions } from '../api/graphql/schemas/schema';
 const queryTest = `
 query {

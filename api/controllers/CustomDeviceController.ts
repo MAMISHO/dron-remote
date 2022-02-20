@@ -1,7 +1,6 @@
 declare var sails: any;
-
 import { DeviceRequest } from '../interfaces';
-import { DeviceRepository } from '../repository/device.repository';
+import { DeviceRepository } from '../repository/device/device.repository';
 
 /*
 export async function findOne(req: any, res: any) {
@@ -42,5 +41,4 @@ module.exports = {
     const result = await DeviceRepository.findAll(deviceRequest);
     res.send(result);
   },
-
 };

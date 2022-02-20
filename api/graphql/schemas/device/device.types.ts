@@ -37,7 +37,3 @@ export const DeviceInputType = new GraphQLInputObjectType({
     password: { type: GraphQLString },
   }),
 });
-
-// export { DeviceType, DeviceInputType };
-// module.exports.DeviceType = DeviceType;
-// module.exports.DeviceInputType = DeviceInputType;

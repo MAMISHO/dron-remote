@@ -1,4 +1,3 @@
-// const { permissions } = require('../../policies/schema.shield.rules');
 import {
   GraphQLInt,
   GraphQLList,
@@ -86,12 +85,3 @@ export const DeviceSchema = new GraphQLSchema({
     fields: DeviceMutations,
   }),
 });
-
-// module.exports.DeviceSchema = DeviceSchema;
-// module.exports.DeviceQueries = DeviceQueries;
-
-/*
-module.exports.schemaWithPermissions = applyMiddleware(
-  DeviceSchema,
-  permissions
-);*/

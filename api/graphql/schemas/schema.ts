@@ -1,9 +1,6 @@
 import { stitchSchemas } from '@graphql-tools/stitch';
 import { applyMiddleware } from 'graphql-middleware';
 import { deny, shield } from 'graphql-shield';
-// const { UserSchema } = require('./user/user.schema');
-// const { DeviceSchema } = require('./device/device.schema');
-// const { UserPermissions } = require('../schemas/user/user.permissions');
 import { DevicePermissions } from './device/device.permissions';
 import { DeviceSchema } from './device/device.schema';
 import { UserPermissions } from './user/user.permissions';

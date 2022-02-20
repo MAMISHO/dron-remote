@@ -24,7 +24,7 @@ export class UserRepositoryImpl {
   add(user: User): void {
     throw new Error('Method not implemented.');
   }
-  update(User: User): void {
+  update(user: User): void {
     throw new Error('Method not implemented.');
   }
   remove(user: User): void {

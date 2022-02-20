@@ -1,18 +1,34 @@
 declare const sails: any;
-import { Device, DeviceRequest } from '../interfaces';
+import { Device, DeviceRequest } from '../../interfaces';
 
-/*export function hello(req:any, res:any, next: Function):any {
-  res.status(200).send('Hello from Typescript!');
-}*/
-
-export class IDeviceRepository {
-  private static _instance: IDeviceRepository;
+export class DeviceRepositoryImpl {
+  //  implements IDeviceRepository {
+  private static _instance: DeviceRepositoryImpl;
 
   private constructor() {}
 
   public static get Instance() {
     // Do you need arguments? Make it a regular static method instead.
     return this._instance || (this._instance = new this());
+  }
+
+  public get(id: number): Promise<Device> {
+    const filter: DeviceRequest = { id };
+    return this.findOne(filter);
+  }
+
+  getByUUID(uuid: string): Promise<Device> {
+    return this.findOne({ uuid });
+  }
+
+  add(device: Device): void {
+    throw new Error('Method not implemented.');
+  }
+  update(device: Device): void {
+    throw new Error('Method not implemented.');
+  }
+  remove(device: Device): void {
+    throw new Error('Method not implemented.');
   }
 
   public async findOne(filter: DeviceRequest): Promise<Device> {
@@ -28,9 +44,11 @@ export class IDeviceRepository {
 
   public async findAll(filter: DeviceRequest): Promise<Device[]> {
     if (!filter || (filter.id && filter.uuid)) {
-      return Promise.reject(new Error('operación no permitida, no se pueden filtrar por ID'));
+      return Promise.reject(
+        new Error('operación no permitida, no se pueden filtrar por ID')
+      );
     }
-    const finalFilter: any =  {};
+    const finalFilter: any = {};
     if (filter.userId) {
       finalFilter.owner = filter.userId;
     }
@@ -42,5 +60,4 @@ export class IDeviceRepository {
   }
 }
 
-export const DeviceRepository = IDeviceRepository.Instance;
-
+export const DeviceRepository = DeviceRepositoryImpl.Instance;

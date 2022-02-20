@@ -35,6 +35,3 @@ export const UserType = new GraphQLObjectType({
     devices: DeviceQueries.getDevices,
   }),
 });
-
-// module.exports.UserType = UserType;
-// export { UserType };

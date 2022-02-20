@@ -40,6 +40,7 @@ export class UserRepositoryImpl {
       uuid: filter.uuid,
       email: filter.email,
     });
+    //.populate('devices');
     if (!user || user.length > 1) {
       return Promise.reject(new Error('No se ha indicado un identificador'));
     }

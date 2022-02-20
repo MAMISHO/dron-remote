@@ -23,5 +23,10 @@
     "baseUrl": "./"
   },
   "exclude": ["node_modules"],
-  "include": ["./**/*.ts", "./**/*.tsx", "api/helpers/recover-token.ts"]
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "api/helpers/recover-token.ts",
+    "api/graphql/policies/schema.shield.rules.js"
+  ]
 }

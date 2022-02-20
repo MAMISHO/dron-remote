@@ -1,5 +1,6 @@
-const { ShieldRules } = require('../../policies/schema.shield.rules');
-const { shield, deny } = require('graphql-shield');
+// const { ShieldRules } = require('../../policies/schema.shield.rules');
+import { ShieldRules } from '../../policies/schema.shield.rules';
+// import { shield, deny, allow } from 'graphql-shield';
 
 /*
 const permissions = shield({
@@ -23,10 +24,13 @@ const permissions = shield({
   },
 };*/
 
-module.exports.UserPermissions = {
+export const UserPermissions = {
   queries: {
     //'*': deny,
     getUser: ShieldRules.isAuthenticated,
+    // getUser: allow,
   },
   mutations: {},
 };
+
+// module.exports.UserPermissions = UserPermissions;

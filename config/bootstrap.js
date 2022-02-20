@@ -19,7 +19,27 @@ const {
   schemaWithPermissions,
 } = require('../api/graphql/schemas/user/user.schema');
 */
-const { schemaWithPermissions } = require('../api/graphql/schemas/schema');
+import { schemaWithPermissions } from '../api/graphql/schemas/schema';
+const queryTest = `
+query {
+  getUser {
+      ... on User {
+          id,
+          name,
+          email,
+          role,
+          devices {
+           ... on Device {
+              id,
+              name,
+              type
+              }
+          }
+      }
+  }
+}
+`;
+
 module.exports.bootstrap = async function (done) {
   // By convention, this is a good place to set up fake data during development.
   //
@@ -44,7 +64,10 @@ module.exports.bootstrap = async function (done) {
     graphqlHTTP((req, res) => ({
       schema: schemaWithPermissions,
       context: { req },
-      graphiql: true,
+      graphiql: {
+        defaultQuery: queryTest,
+        headerEditorEnabled: true,
+      },
     }))
   );
   return done();

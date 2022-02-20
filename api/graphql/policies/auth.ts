@@ -1,3 +1,4 @@
+declare const sails: any;
 /**
  * auth.js
  *
@@ -7,9 +8,10 @@
  *
  */
 
-const { checkPermission } = require('./permission');
+import { PolicyPermission } from './permission';
 
-module.exports = {
+// module.exports = {
+export const GraphAuth = {
   _authenticate: async (context) => {
     console.log('pasa por el authenticate');
     let req = context.req;
@@ -32,7 +34,7 @@ module.exports = {
         errors: [
           {
             code: 'E_DECODE',
-            message: message,
+            message: 'message', // TODO: ver como obtener el message
           },
         ],
       };
@@ -53,11 +55,19 @@ module.exports = {
     if (scopeSplit.length > 2) {
       if (scopeSplit[2] === 'admin') {
         if (user.isRoleAdmin) {
-          isAllowed = await checkPermission(user.roleId, permission, resource);
+          isAllowed = await PolicyPermission.checkRole(
+            user.roleId,
+            permission,
+            resource
+          );
         }
       }
     } else {
-      isAllowed = await checkPermission(user.roleId, permission, resource);
+      isAllowed = await PolicyPermission.checkRole(
+        user.roleId,
+        permission,
+        resource
+      );
     }
 
     if (!isAllowed) {

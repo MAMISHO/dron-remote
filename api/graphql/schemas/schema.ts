@@ -1,10 +1,13 @@
-const { shield, deny } = require('graphql-shield');
-const { stitchSchemas } = require('@graphql-tools/stitch');
-const { applyMiddleware } = require('graphql-middleware');
-const { UserSchema } = require('./user/user.schema');
-const { DeviceSchema } = require('./device/device.schema');
-const { UserPermissions } = require('../schemas/user/user.permissions');
-const { DevicePermissions } = require('../schemas/device/device.permissions');
+import { stitchSchemas } from '@graphql-tools/stitch';
+import { applyMiddleware } from 'graphql-middleware';
+import { deny, shield } from 'graphql-shield';
+// const { UserSchema } = require('./user/user.schema');
+// const { DeviceSchema } = require('./device/device.schema');
+// const { UserPermissions } = require('../schemas/user/user.permissions');
+import { DevicePermissions } from './device/device.permissions';
+import { DeviceSchema } from './device/device.schema';
+import { UserPermissions } from './user/user.permissions';
+import { UserSchema } from './user/user.schema';
 
 // Configuramos los subschemas
 const userSchema = { schema: UserSchema };
@@ -31,7 +34,10 @@ const schemaPermissions = shield({
 });
 
 // Aplicamos las reglas al schema
+/*
 module.exports.schemaWithPermissions = applyMiddleware(
   schema,
   schemaPermissions
 );
+*/
+export const schemaWithPermissions = applyMiddleware(schema, schemaPermissions);

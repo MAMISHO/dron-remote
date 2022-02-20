@@ -1,5 +1,6 @@
-const { shield, and, deny } = require('graphql-shield');
-const { ShieldRules } = require('../../policies/schema.shield.rules');
+import { and } from 'graphql-shield';
+// const { ShieldRules } = require('../../policies/schema.shield.rules');
+import { ShieldRules } from '../../policies/schema.shield.rules';
 
 /*
 const permissions = shield({
@@ -40,12 +41,15 @@ module.exports.DevicePermissions = {
 };
 */
 
-module.exports.DevicePermissions = {
+export const DevicePermissions = {
   queries: {
     getDevices: and(ShieldRules.isAuthenticated, ShieldRules.isAdmin),
     getDevice: ShieldRules.isAuthenticated,
   },
   mutations: {
-    addDevice: ShieldRules.isNotAlreadyRegistered,
+    // addDevice: ShieldRules.isNotAlreadyRegistered,
+    addDevice: and(ShieldRules.isAuthenticated, ShieldRules.isAdmin),
   },
 };
+
+// module.exports.DevicePermissions = DevicePermissions;

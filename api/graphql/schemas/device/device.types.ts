@@ -1,12 +1,12 @@
-const {
+import {
   GraphQLEnumType,
-  GraphQLObjectType,
   GraphQLInputObjectType,
   GraphQLInt,
+  GraphQLObjectType,
   GraphQLString,
-} = require('graphql');
+} from 'graphql';
 
-const DeviceTypeEnumType = new GraphQLEnumType({
+export const DeviceTypeEnumType = new GraphQLEnumType({
   name: 'DeviceTypeEnum',
   values: {
     DRON: {
@@ -18,7 +18,7 @@ const DeviceTypeEnumType = new GraphQLEnumType({
   },
 });
 
-const DeviceType = new GraphQLObjectType({
+export const DeviceType = new GraphQLObjectType({
   name: 'Device',
   fields: () => ({
     id: { type: GraphQLInt },
@@ -28,7 +28,7 @@ const DeviceType = new GraphQLObjectType({
   }),
 });
 
-const DeviceInputType = new GraphQLInputObjectType({
+export const DeviceInputType = new GraphQLInputObjectType({
   name: 'DeviceInput',
   fields: () => ({
     name: { type: GraphQLString },
@@ -39,5 +39,5 @@ const DeviceInputType = new GraphQLInputObjectType({
 });
 
 // export { DeviceType, DeviceInputType };
-module.exports.DeviceType = DeviceType;
-module.exports.DeviceInputType = DeviceInputType;
+// module.exports.DeviceType = DeviceType;
+// module.exports.DeviceInputType = DeviceInputType;

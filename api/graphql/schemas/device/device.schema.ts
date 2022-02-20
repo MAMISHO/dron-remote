@@ -1,11 +1,23 @@
-const { applyMiddleware } = require('graphql-middleware');
-const { permissions } = require('../../policies/schema.shield.rules');
-const { GraphQLSchema, GraphQLObjectType, GraphQLNonNull } = require('graphql');
-const { DeviceType, DeviceInputType } = require('./device.types');
+// const { permissions } = require('../../policies/schema.shield.rules');
+import {
+  GraphQLInt,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from 'graphql';
+import { DeviceInputType, DeviceType } from './device.types';
 
-const DeviceQueries = {
+// Pagination https://github.com/graph-gophers/graphql-go/pull/169
+
+export const DeviceQueries = {
   getDevice: {
     type: DeviceType,
+    args: {
+      id: { type: GraphQLInt },
+      uuid: { type: GraphQLString },
+    },
     resolve: () => {
       return {
         id: 1,
@@ -16,12 +28,28 @@ const DeviceQueries = {
     },
   },
   getDevices: {
-    type: DeviceType,
-    resolve: () => 'Bye wold',
+    type: new GraphQLList(DeviceType),
+    name: 'devices',
+    resolve: (root, params, options, info) => {
+      return [
+        {
+          id: 0,
+          name: 'world',
+          type: 'DRON',
+          email: 'world',
+        },
+        {
+          id: -1,
+          name: 'world-1',
+          type: 'DRON',
+          email: 'world-1',
+        },
+      ];
+    },
   },
 };
 
-const DeviceMutations = {
+export const DeviceMutations = {
   addDevice: {
     type: DeviceType,
     args: {
@@ -48,7 +76,7 @@ const DeviceMutations = {
   },
 };
 
-const DeviceSchema = new GraphQLSchema({
+export const DeviceSchema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'DeviceQueries',
     fields: DeviceQueries,
@@ -59,7 +87,8 @@ const DeviceSchema = new GraphQLSchema({
   }),
 });
 
-module.exports.DeviceSchema = DeviceSchema;
+// module.exports.DeviceSchema = DeviceSchema;
+// module.exports.DeviceQueries = DeviceQueries;
 
 /*
 module.exports.schemaWithPermissions = applyMiddleware(

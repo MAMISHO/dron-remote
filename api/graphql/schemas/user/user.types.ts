@@ -1,16 +1,13 @@
-const {
-  GraphQLEnumType,
-  GraphQLObjectType,
-  GraphQLInputObjectType,
-  GraphQLInt,
-  GraphQLString,
+import {
   GraphQLBoolean,
-  GraphQLList,
-} = require('graphql');
+  GraphQLEnumType,
+  GraphQLInt,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
+import { DeviceQueries } from '../device/device.schema';
 
-const { DeviceType } = require('../device/device.types');
-
-const UsertRoleEnumType = new GraphQLEnumType({
+export const UsertRoleEnumType = new GraphQLEnumType({
   name: 'UsertRoleEnum',
   values: {
     ADMIN: {
@@ -22,7 +19,7 @@ const UsertRoleEnumType = new GraphQLEnumType({
   },
 });
 
-const UserType = new GraphQLObjectType({
+export const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: { type: GraphQLInt },
@@ -31,12 +28,13 @@ const UserType = new GraphQLObjectType({
     email: { type: GraphQLString },
     role: { type: UsertRoleEnumType },
     status: { type: GraphQLBoolean },
-    devices: {
+    /*devices: {
       type: new GraphQLList(DeviceType),
       name: 'devices',
-    },
+    },*/
+    devices: DeviceQueries.getDevices,
   }),
 });
 
-module.exports.UserType = UserType;
+// module.exports.UserType = UserType;
 // export { UserType };

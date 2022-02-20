@@ -5,8 +5,20 @@
  *
  */
 
-module.exports = {
+/*module.exports = {
   checkPermission: (roleId, permission, resource) => {
+    console.log(
+      `checkPermission() Role Id: ${roleId}, Permission: ${permission}, Resource: ${resource}`
+    );
+
+    // add your RBAC code here and return true for allow or false for disallow
+
+    return true; // allow
+  },
+};*/
+
+export const PolicyPermission = {
+  checkRole: (roleId, permission, resource) => {
     console.log(
       `checkPermission() Role Id: ${roleId}, Permission: ${permission}, Resource: ${resource}`
     );

@@ -1,5 +1,6 @@
-const { shield, rule, and, inputRule, deny } = require('graphql-shield');
-const { _authenticate, _authorize } = require('./auth');
+import { rule } from 'graphql-shield';
+// const { _authenticate, _authorize } = require('./auth');
+import { GraphAuth } from './auth';
 // const { UserPermissions } = require('../schemas/user/user.permissions');
 // const { DevicePermissions } = require('../schemas/device/device.permissions');
 
@@ -10,7 +11,7 @@ const shieldRules = {
     let userAuth = false;
     if (ctx.user === undefined) {
       try {
-        var result = await _authenticate(ctx);
+        var result = await GraphAuth._authenticate(ctx);
         if (result !== undefined && result.errors === undefined) {
           userAuth = true;
         }
@@ -32,7 +33,7 @@ const shieldRules = {
     return ctx.user.isRoleAdmin;
   }),
 
-  isNotAlreadyRegistered: inputRule()((yup) =>
+  /*isNotAlreadyRegistered: inputRule()((yup) =>
     yup.object({
       input: yup.object({
         name: yup.string().required(),
@@ -46,7 +47,7 @@ const shieldRules = {
           ),
       }),
     })
-  ),
+  ),*/
 };
 
 /*const permissions = shield({
@@ -68,5 +69,6 @@ const shieldRules = {
   },
 });*/
 
-//module.exports.permissions = permissions;
-module.exports.ShieldRules = shieldRules;
+// module.exports.permissions = permissions;
+// module.exports.ShieldRules = shieldRules;
+export const ShieldRules = shieldRules;

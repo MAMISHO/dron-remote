@@ -21,14 +21,14 @@ export class UserRepositoryImpl {
     return this.findOne({ uuid });
   }
 
-  add(user: User): void {
-    throw new Error('Method not implemented.');
+  add(user: User): Promise<User> {
+    return this.saveUser(user);
   }
-  update(user: User): void {
-    throw new Error('Method not implemented.');
+  update(user: User): Promise<User> {
+    return this.updateUser(user);
   }
-  remove(user: User): void {
-    throw new Error('Method not implemented.');
+  remove(user: User): Promise<User> {
+    return this.deleteUser(user);
   }
 
   public async findOne(filter: UserRequest): Promise<User> {
@@ -59,6 +59,31 @@ export class UserRepositoryImpl {
       return Promise.resolve(users);
     }
     return Promise.resolve([]);
+  }
+
+  private async saveUser(user: User): Promise<User> {
+    const userSaved: User = await sails.models.user.create(user);
+    return userSaved;
+  }
+
+  private async updateUser(user: User): Promise<User> {
+    const userSaved: User = await sails.models.user
+      .updateOne({ uuid: user.uuid })
+      .set(user);
+    return userSaved;
+  }
+
+  private async deleteUser(user: User): Promise<User> {
+    const userToDelete: User = await sails.models.user.findOne({
+      uuid: user.uuid,
+    });
+    if (!userToDelete) {
+      return null;
+    }
+    const userSaved: User = await sails.models.user
+      .updateOne({ uuid: userToDelete.uuid })
+      .set({ status: true });
+    return userSaved;
   }
 }
 

@@ -9,11 +9,16 @@ export const UserHelper = {
     return UserRepository.get(id);
   },
 
-  _getUserByUUID: async function (uuid: string) {
+  _getUserByUUID: async function (uuid: string): Promise<User> {
     if (!uuid || uuid.length < 32) {
       return null;
     }
     const user = await UserRepository.getByUUID(uuid);
     return Promise.resolve(user);
+  },
+
+  _addUser: async function (data: any): Promise<User> {
+    const user: User = Object.assign({}, data);
+    return UserRepository.add(user);
   },
 };

@@ -6,6 +6,7 @@ import {
   GraphQLSchema,
   GraphQLString,
 } from 'graphql';
+import { Device, User } from '../../../interfaces';
 import { DeviceHelper } from '../../helpers/device.helper';
 import { DeviceInputType, DeviceType } from './device.types';
 
@@ -18,7 +19,7 @@ export const DeviceQueries = {
       id: { type: GraphQLInt },
       uuid: { type: GraphQLString },
     },
-    resolve: () => {
+    resolve: (root, params, options, info) => {
       return {
         id: 1,
         name: 'testDron',
@@ -31,20 +32,6 @@ export const DeviceQueries = {
     type: new GraphQLList(DeviceType),
     name: 'devices',
     resolve: (root, params, options, info) => {
-      /*return [
-        {
-          id: 0,
-          name: 'world',
-          type: 'DRON',
-          email: 'world',
-        },
-        {
-          id: -1,
-          name: 'world-1',
-          type: 'DRON',
-          email: 'world-1',
-        },
-      ];*/
       if (root) {
         params.id = root.id;
         params.uuid = root.uuid;
@@ -67,20 +54,26 @@ export const DeviceMutations = {
         type: new GraphQLNonNull(DeviceInputType),
       },
     },
-    resolve(root, params, options) {
-      /*const data = { ...params.data };
-      if (!employees) {
-        employees = [];
+    resolve(root, params, options, info) {
+      const user: User = new User({ ...options.user });
+      if (!params || Object.keys(params).length === 0) {
+        // Devolvemos los datos sel usuario de la sesión
+        // Devolvemos error
       }
-      data.id = employees.length + 1;
-      employees.push(data);
-      return data;*/
-      return {
+      const data = { ...params.data };
+      const device: Device = Object.assign({}, data);
+      if (!device.owner) {
+        // Lo saca de la sessión
+        device.owner = user;
+      }
+
+      return device;
+      /*return {
         id: 1,
         name: 'testDron',
         type: 'DRON',
         email: 'test@example.com',
-      };
+      };*/
     },
   },
 };

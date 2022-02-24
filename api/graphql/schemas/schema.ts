@@ -37,4 +37,6 @@ module.exports.schemaWithPermissions = applyMiddleware(
   schemaPermissions
 );
 */
-export const schemaWithPermissions = applyMiddleware(schema, schemaPermissions);
+//
+export const SchemaWithPermissions = applyMiddleware(schema, schemaPermissions);
+export const Schema = schema;

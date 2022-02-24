@@ -1,0 +1,4 @@
+{
+  "watch": ["api", "assets/app"],
+  "ext": "ts,json, js, html"
+}

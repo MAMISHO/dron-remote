@@ -1,11 +1,13 @@
 import {
   GraphQLInt,
+  GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
 } from 'graphql';
 import { User } from '../../../interfaces/user.model';
 import { UserHelper } from '../../helpers/user.helper';
+import { DeviceInputType } from '../device/device.types';
 import { UserType } from './user.types';
 
 export const UserQueries = {
@@ -30,6 +32,25 @@ export const UserQueries = {
       }
       if (params.uuid && isAdmin) {
         return UserHelper._getUserByUUID(params.uuid);
+      }
+      return null;
+    },
+  },
+};
+
+export const UserMutations = {
+  addUser: {
+    type: UserType,
+    args: {
+      data: {
+        name: 'data',
+        type: new GraphQLNonNull(DeviceInputType),
+      },
+    },
+    resolve: (root, params, options, info) => {
+      const data = { ...params.data };
+      if (data) {
+        return UserHelper._addUser(data);
       }
       return null;
     },

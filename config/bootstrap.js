@@ -9,7 +9,9 @@
  * https://sailsjs.com/config/bootstrap
  */
 const { graphqlHTTP } = require('express-graphql');
-import { schemaWithPermissions } from '../api/graphql/schemas/schema';
+import { printSchema } from 'graphql';
+import { Schema, SchemaWithPermissions } from '../api/graphql/schemas/schema';
+import { prettify } from '../api/services/prettier';
 const queryTest = `
 query {
   getUser {
@@ -52,13 +54,26 @@ module.exports.bootstrap = async function (done) {
   sails.hooks.http.app.use(
     '/graphql',
     graphqlHTTP((req, res) => ({
-      schema: schemaWithPermissions,
+      schema: SchemaWithPermissions,
       context: { req },
       graphiql: {
         defaultQuery: queryTest,
         headerEditorEnabled: true,
       },
+      pretty: true,
     }))
   );
+  sails.hooks.http.app.use('/graphqlsdl', function (req, res, next) {
+    const rawSdl = printSchema(Schema, { commentDescriptions: true });
+    const sdl = prettify(rawSdl, {
+      printWidth: 80,
+      tabWidth: 2,
+      useTabs: false,
+    });
+    // console.log(sdl);
+    res
+      .status(200)
+      .send(`<textarea name="textarea" rows="50" cols="80">${sdl}</textarea>`);
+  });
   return done();
 };

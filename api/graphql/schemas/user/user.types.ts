@@ -23,6 +23,7 @@ export const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: { type: GraphQLInt },
+    uuid: { type: GraphQLString },
     name: { type: GraphQLString },
     surname: { type: GraphQLString },
     email: { type: GraphQLString },

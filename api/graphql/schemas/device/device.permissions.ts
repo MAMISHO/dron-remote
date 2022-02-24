@@ -8,6 +8,6 @@ export const DevicePermissions = {
   },
   mutations: {
     // addDevice: ShieldRules.isNotAlreadyRegistered,
-    addDevice: and(ShieldRules.isAuthenticated, ShieldRules.isAdmin),
+    addDevice: and(ShieldRules.isAuthenticated),
   },
 };

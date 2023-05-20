@@ -90,16 +90,17 @@ return 'emailAlreadyInUse';
      * @param {*} res
      */
     login: async function(req, res) {
-        const params = req.allParams();
+        /*const params = req.allParams();
         const user = await User.findOne({ email: req.param('email') });
         if (!user) {
             return res.forbidden({ err: 'User or password wrong' });
         }
         const result = bcrypt.compareSync(req.param('password'), user.password);
+        */
         if (result) {
             //password is a match
             return res.json({
-                user: user,
+                user: { email: "prueba@dimaun.com", username: "edwin" },
                 token: jwToken.sign(user), //generate the token and send it in the response
             });
         } else {
